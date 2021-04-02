@@ -1,3 +1,13 @@
+variable "tf_state_bucket" {
+  type        = string
+  description = "S3 bucket which stores terraform state"
+}
+
+variable "tf_state_key" {
+  type        = string
+  description = "Path in S3 bucket which stores terraform state"
+}
+
 variable "vpc_name" {
   type        = string
   description = "Name to be used on all the VPC resources as identifier"

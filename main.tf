@@ -1,3 +1,18 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+  backend "s3" {
+    bucket = var.tf_state_bucket
+    key    = var.tf_state_key
+  }
+}
+
+provider "aws" {}
+
 module "vpc" {
   source                                   = "terraform-aws-modules/vpc/aws"
   version                                  = "~> 2.0"
