@@ -34,9 +34,9 @@ variable "vpc_public_subnets" {
 }
 
 variable "iam_role_name" {
-  type    = string
+  type        = string
   description = "IAM role name"
-  default = ""
+  default     = ""
 }
 
 variable "instance_type" {
