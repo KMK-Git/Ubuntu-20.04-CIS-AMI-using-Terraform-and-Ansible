@@ -49,7 +49,7 @@ module "instance_sg" {
       from_port   = 443
       to_port     = 443
       protocol    = "tcp"
-      cidr_blocks = "10.0.0.0/16"
+      cidr_blocks = var.vpc_cidr
     }
   ]
 }
@@ -65,8 +65,7 @@ resource "aws_default_security_group" "default" {
   }
 
   egress {
-    cidr_blocks = [
-    "10.0.0.0/16"]
+    cidr_blocks = [var.vpc_cidr]
     protocol  = "tcp"
     from_port = 443
     to_port   = 443
