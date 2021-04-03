@@ -60,7 +60,7 @@ jobs:
       - name: Terraform graph
         id: graph
         if: steps.graphviz_setup.outcome == 'success'
-        run: terraform graph | dot -Tpng > graph.png
+        run: terraform graph
         continue-on-error: true
         env:
           TF_VAR_vpc_name: ${{ secrets.VPC_NAME }}
@@ -71,14 +71,14 @@ jobs:
           TF_VAR_iam_role_name: ${{ secrets.IAM_ROLE_NAME }}
           TF_VAR_instance_name: ${{ secrets.INSTANCE_NAME }}
 
-      - name: Upload graph
-        id: upload
-        if: steps.graph.outcome == 'success'
-        uses: devicons/public-upload-to-imgur@v2.1.1
-        with:
-          path: ./graph.png
-          client_id: ${{secrets.IMGUR_TOKEN}}
-        continue-on-error: true
+#      - name: Upload graph
+#        id: upload
+#        if: steps.graph.outcome == 'success'
+#        uses: devicons/public-upload-to-imgur@v2.1.1
+#        with:
+#          path: ./graph.png
+#          client_id: ${{secrets.IMGUR_TOKEN}}
+#        continue-on-error: true
 
       - name: Comment with image
         uses: actions/github-script@v3
