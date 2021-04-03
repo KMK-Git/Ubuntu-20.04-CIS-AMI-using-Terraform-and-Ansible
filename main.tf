@@ -66,9 +66,9 @@ resource "aws_default_security_group" "default" {
 
   egress {
     cidr_blocks = [var.vpc_cidr]
-    protocol  = "tcp"
-    from_port = 443
-    to_port   = 443
+    protocol    = "tcp"
+    from_port   = 443
+    to_port     = 443
   }
 }
 
