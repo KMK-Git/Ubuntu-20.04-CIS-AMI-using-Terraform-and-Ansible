@@ -2,7 +2,6 @@ variable "vpc_name" {
   type        = string
   description = "Name to be used on all the VPC resources as identifier"
   default     = ""
-  sensitive   = true
 }
 
 variable "sg_name" {
@@ -21,7 +20,6 @@ variable "vpc_cidr" {
 variable "vpc_azs" {
   type        = list(string)
   description = "A list of availability zones names or ids in the region"
-  sensitive   = true
 }
 
 variable "vpc_private_subnets" {
@@ -42,7 +40,6 @@ variable "iam_role_name" {
   type        = string
   description = "IAM role name"
   default     = ""
-  sensitive   = true
 }
 
 variable "instance_type" {

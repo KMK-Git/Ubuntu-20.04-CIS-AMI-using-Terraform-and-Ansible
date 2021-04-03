@@ -74,7 +74,7 @@ module "ec2_instance" {
   source                      = "terraform-aws-modules/ec2-instance/aws"
   version                     = "~> 2.0"
   name                        = var.instance_name
-  ami                         = data.aws_ami.ubuntu
+  ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   associate_public_ip_address = var.is_public_instance
   user_data                   = var.user_data
