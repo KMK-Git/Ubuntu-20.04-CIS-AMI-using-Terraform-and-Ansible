@@ -12,11 +12,6 @@ terraform {
 
 provider "aws" {}
 
-data "aws_security_group" "default" {
-  name   = "default"
-  vpc_id = module.vpc.vpc_id
-}
-
 module "vpc" {
   source                           = "terraform-aws-modules/vpc/aws"
   version                          = "~> 2.0"
@@ -31,17 +26,17 @@ module "vpc" {
   enable_ssm_endpoint              = !var.is_public_instance
   ssm_endpoint_private_dns_enabled = var.is_public_instance ? null : true
   ssm_endpoint_security_group_ids = [
-    data.aws_security_group.default.id
+    module.endpoint_sg.this_security_group_id
   ]
   enable_ec2messages_endpoint              = !var.is_public_instance
   ec2messages_endpoint_private_dns_enabled = var.is_public_instance ? null : true
   ec2messages_endpoint_security_group_ids = [
-    data.aws_security_group.default.id
+    module.endpoint_sg.this_security_group_id
   ]
   enable_ssmmessages_endpoint              = !var.is_public_instance
   ssmmessages_endpoint_private_dns_enabled = var.is_public_instance ? null : true
   ssmmessages_endpoint_security_group_ids = [
-    data.aws_security_group.default.id
+    module.endpoint_sg.this_security_group_id
   ]
 }
 
@@ -80,6 +75,29 @@ resource "aws_default_security_group" "default" {
     from_port = 443
     to_port   = 443
   }
+}
+
+module "endpoint_sg" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 3.0"
+  vpc_id  = module.vpc.vpc_id
+  name    = var.sg_name
+  ingress_with_source_security_group_id = [
+    {
+      protocol                 = "tcp"
+      from_port                = 443
+      to_port                  = 443
+      source_security_group_id = module.instance_sg.this_security_group_id
+    }
+  ]
+  egress_with_cidr_blocks = [
+    {
+      cidr_blocks = var.vpc_cidr
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+    }
+  ]
 }
 
 module "instance_role" {
