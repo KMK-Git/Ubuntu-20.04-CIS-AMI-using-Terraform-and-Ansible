@@ -55,28 +55,6 @@ module "instance_sg" {
   ]
 }
 
-resource "aws_default_security_group" "default" {
-  vpc_id = module.vpc.vpc_id
-
-  ingress {
-    protocol  = "tcp"
-    from_port = 443
-    to_port   = 443
-    security_groups = [
-      module.instance_sg.this_security_group_id
-    ]
-  }
-
-  egress {
-    cidr_blocks = [
-      var.vpc_cidr
-    ]
-    protocol  = "tcp"
-    from_port = 443
-    to_port   = 443
-  }
-}
-
 module "endpoint_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
@@ -154,9 +132,9 @@ module "ec2_instance" {
   iam_instance_profile = module.instance_role.this_iam_instance_profile_name
   # Explicit dependencies on full modules so that they are ready before instance attempts to register with Systems manager
   depends_on = [
-    aws_default_security_group.default,
     module.vpc,
     module.instance_role,
-    module.instance_sg
+    module.instance_sg,
+    module.endpoint_sg
   ]
 }
