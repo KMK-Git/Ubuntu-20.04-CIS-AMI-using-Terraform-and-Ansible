@@ -93,7 +93,7 @@ jobs:
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*
 
-            ![Graph](${{ process.env.IMG_URL }})`;
+            ![Graph](${ process.env.IMG_URL })`;
 
 
             github.issues.createComment({
