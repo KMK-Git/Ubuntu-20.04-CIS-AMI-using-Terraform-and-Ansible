@@ -8,13 +8,11 @@ variable "sg_name" {
   type        = string
   description = "Name of security group"
   default     = ""
-  sensitive   = true
 }
 
 variable "vpc_cidr" {
   type        = string
   description = "The CIDR block for the VPC"
-  sensitive   = true
 }
 
 variable "vpc_azs" {
@@ -26,14 +24,12 @@ variable "vpc_private_subnets" {
   type        = list(string)
   description = "A list of private subnets inside the VPC. First subnet in list is used if instance is private"
   default     = []
-  sensitive   = true
 }
 
 variable "vpc_public_subnets" {
   type        = list(string)
   description = "A list of public subnets inside the VPC.  First subnet in list is used if instance is public"
   default     = []
-  sensitive   = true
 }
 
 variable "iam_role_name" {
@@ -52,14 +48,12 @@ variable "instance_name" {
   type        = string
   description = "Name to be used on all EC2 resources as prefix"
   default     = ""
-  sensitive   = true
 }
 
 variable "user_data" {
   type        = string
   description = "The user data to provide when launching the instance."
   default     = ""
-  sensitive   = true
 }
 
 variable "is_public_instance" {
