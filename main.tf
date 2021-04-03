@@ -115,4 +115,6 @@ module "ec2_instance" {
   subnet_id                   = var.is_public_instance ? module.vpc.public_subnets[0] : module.vpc.private_subnets[0]
   vpc_security_group_ids      = [module.instance_sg.this_security_group_id]
   iam_instance_profile        = module.instance_role.this_iam_instance_profile_name
+  # Required before instance is registered with Systems manager
+  depends_on = [aws_default_security_group.default]
 }
