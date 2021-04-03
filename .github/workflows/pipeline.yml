@@ -32,9 +32,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init \
-          -backend-config="bucket=$STATE_BUCKET_NAME" \
-          -backend-config="key=$STATE_BUCKET_KEY"
+        run: terraform init -backend-config="bucket=$STATE_BUCKET_NAME" -backend-config="key=$STATE_BUCKET_KEY"
         env:
           STATE_BUCKET_NAME: ${{ secrets.STATE_BUCKET_NAME }}
           STATE_BUCKET_KEY: ${{ secrets.STATE_BUCKET_KEY }}
