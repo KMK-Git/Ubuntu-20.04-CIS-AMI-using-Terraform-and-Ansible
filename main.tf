@@ -48,9 +48,9 @@ module "instance_sg" {
     {
       from_port   = 443
       to_port     = 443
-      protocol    = tcp
+      protocol    = "tcp"
       cidr_blocks = "10.0.0.0/16"
-    },
+    }
   ]
 }
 
@@ -58,9 +58,7 @@ resource "aws_default_security_group" "default" {
   vpc_id = module.vpc.vpc_id
 
   ingress {
-    cidr_blocks = [
-    "10.0.0.0/16"]
-    protocol        = tcp
+    protocol        = "tcp"
     from_port       = 443
     to_port         = 443
     security_groups = [module.instance_sg.this_security_group_id]
@@ -69,7 +67,7 @@ resource "aws_default_security_group" "default" {
   egress {
     cidr_blocks = [
     "10.0.0.0/16"]
-    protocol  = tcp
+    protocol  = "tcp"
     from_port = 443
     to_port   = 443
   }
