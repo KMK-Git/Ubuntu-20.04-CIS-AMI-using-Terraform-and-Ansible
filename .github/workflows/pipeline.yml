@@ -84,7 +84,6 @@ jobs:
         uses: actions/github-script@v3
         if: ${{ github.event_name == 'pull_request' && steps.upload.outcome == 'success' }}
         env:
-          IMG_URL: ${{ fromJSON(steps.upload.outputs.imgur_urls)[0] }}
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -101,7 +100,7 @@ jobs:
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*
 
-            ![Graph](${ process.env.IMG_URL })`;
+            ![Graph](${{ fromJSON(steps.upload.outputs.imgur_urls)[0] }})`;
 
 
             github.issues.createComment({
