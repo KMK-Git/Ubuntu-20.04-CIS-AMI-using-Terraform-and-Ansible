@@ -145,5 +145,5 @@ resource "local_file" "hosts_cfg" {
       instance_id = module.ec2_instance.id[0]
     }
   )
-  filename = "${path.module}/ansible/hosts.cfg"
+  filename = "${path.module}/ansible/hosts.yml"
 }
