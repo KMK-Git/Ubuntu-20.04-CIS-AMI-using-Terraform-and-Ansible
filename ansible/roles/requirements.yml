@@ -1,0 +1,3 @@
+- name: cisubuntu
+  src: https://github.com/alivx/CIS-Ubuntu-20.04-Ansible
+  version: origin/master

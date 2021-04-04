@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: "{{ ansible_bucket }}"
+  become: true
+  remote_user: root
+  gather_facts: false
+  tasks:
+    - name: Wait for instance to be reachable
+      wait_for_connection:
+        delay: 60
+        timeout: 300
+    - name: Include the cisubuntu role
+      include_role:
+        name: cisubuntu

@@ -138,3 +138,12 @@ module "ec2_instance" {
     module.endpoint_sg
   ]
 }
+
+resource "local_file" "hosts_cfg" {
+  content = templatefile("${path.module}/ansible/hosts.tpl",
+    {
+      instance_id = module.ec2_instance.id[0]
+    }
+  )
+  filename = "${path.module}/ansible/hosts.cfg"
+}
