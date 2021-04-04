@@ -97,7 +97,7 @@ jobs:
 
       - name: Ansible deploy
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: ansible-playbook -i ./ansible/hosts.yml ./ansible/playbook.yml -t 1.1.1.1 --extra-vars "ansible_bucket=$ANSIBLE_BUCKET" --vault-password-file ./ansible/vault.sh
+        run: ansible-playbook -vvvv -i ./ansible/hosts.yml ./ansible/playbook.yml -t 1.1.1.1 --extra-vars "ansible_bucket=$ANSIBLE_BUCKET aws_region=$AWS_DEFAULT_REGION" --vault-password-file ./ansible/vault.sh
         env:
           ANSIBLE_BUCKET: ${{ secrets.ANSIBLE_BUCKET }}
           VAULT_PASS: ${{ secrets.VAULT_PASS }}
