@@ -1,7 +1,8 @@
 ---
 - hosts: all
   vars:
-    ansible_connection: aws_ssm
+    ansible_connection: community.aws.aws_ssm
+    ansible_aws_ssm_region: "{{ aws_region }}"
     ansible_aws_ssm_bucket_name: "{{ ansible_bucket }}"
   become: true
   remote_user: root
