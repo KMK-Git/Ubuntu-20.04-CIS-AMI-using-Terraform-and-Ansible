@@ -8,4 +8,3 @@ output "instance_id" {
   value       = module.ec2_instance.id[0]
   description = "Instance ID of deployed EC2 instance"
 }
-}
