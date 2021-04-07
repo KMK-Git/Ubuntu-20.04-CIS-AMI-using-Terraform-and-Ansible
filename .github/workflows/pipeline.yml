@@ -18,6 +18,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ~0.14.0
+          terraform_wrapper: false
 
       - name: Terraform Format
         id: fmt
