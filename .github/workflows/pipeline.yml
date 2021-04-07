@@ -105,12 +105,9 @@ jobs:
       - name: Wait for instance to register itself with aws ssm
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          terraform output -raw instance_id
-          m="$(terraform output -raw instance_id)"
-          echo $m
           while true ; do
-              aws ssm describe-instance-associations-status --instance-id "$(terraform output -raw instance_id)"
-              assoc_length="$(aws ssm describe-instance-associations-status --instance-id "$(terraform output -raw instance_id)" | jq '.InstanceAssociationStatusInfos | length')"
+              aws ssm  describe-instance-information --filters "Key=InstanceIds,Values="$(terraform output -raw instance_id)""
+              assoc_length="$(aws ssm  describe-instance-information --filters "Key=InstanceIds,Values="$(terraform output -raw instance_id)"" | jq '.InstanceInformationList | length')"
               echo $assoc_length
               if [[ $assoc_length -gt 0 ]]; then
                   break
