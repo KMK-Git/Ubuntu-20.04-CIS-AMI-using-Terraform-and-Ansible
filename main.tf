@@ -84,7 +84,8 @@ module "instance_role" {
   create_instance_profile = true
   create_role             = true
   custom_role_policy_arns = [
-    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+    "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
   ]
   role_name         = var.iam_role_name
   role_requires_mfa = false
@@ -137,13 +138,4 @@ module "ec2_instance" {
     module.instance_sg,
     module.endpoint_sg
   ]
-}
-
-resource "local_file" "hosts_cfg" {
-  content = templatefile("${path.module}/ansible/hosts.tpl",
-    {
-      instance_id = module.ec2_instance.id[0]
-    }
-  )
-  filename = "${path.module}/ansible/hosts.yml"
 }
