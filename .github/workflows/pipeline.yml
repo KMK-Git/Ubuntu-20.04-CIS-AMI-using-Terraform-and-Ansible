@@ -100,9 +100,9 @@ jobs:
         run: |
           while true ; do
               aws ssm describe-instance-associations-status --instance-id "$(terraform output -raw instance_id)"
-              assoc_length=$(aws ssm describe-instance-associations-status --instance-id "$(terraform output -raw instance_id)" | jq ".InstanceAssociationStatusInfos | length")
+              assoc_length="$(aws ssm describe-instance-associations-status --instance-id "$(terraform output -raw instance_id)" | jq '.InstanceAssociationStatusInfos | length')"
               echo $assoc_length
-              if [ assoc_length -gt 0 ]; then
+              if [[ $assoc_length -gt 0 ]]; then
                   break
               fi
               sleep 20
