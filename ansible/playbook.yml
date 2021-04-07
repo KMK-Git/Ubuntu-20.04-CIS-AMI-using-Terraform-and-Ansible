@@ -4,10 +4,6 @@
   remote_user: root
   become_method: sudo
   tasks:
-    - name: Wait for instance to be reachable
-      wait_for_connection:
-        delay: 60
-        timeout: 300
     - name: Print all available facts
       ansible.builtin.debug:
         var: ansible_facts
