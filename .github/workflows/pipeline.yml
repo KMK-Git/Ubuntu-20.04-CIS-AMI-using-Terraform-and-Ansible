@@ -97,10 +97,10 @@ jobs:
           TF_VAR_instance_name: ${{ secrets.INSTANCE_NAME }}
 
       - name: Setup Terraform without wrapper
-          uses: hashicorp/setup-terraform@v1
-          with:
-            terraform_version: ~0.14.0
-            terraform_wrapper: false
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ~0.14.0
+          terraform_wrapper: false
 
       - name: Wait for instance to register itself with aws ssm
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
