@@ -38,6 +38,7 @@ module "vpc" {
   ssmmessages_endpoint_security_group_ids = [
     module.endpoint_sg.this_security_group_id
   ]
+  enable_s3_endpoint = true
 }
 
 module "instance_sg" {
