@@ -26,12 +26,6 @@ variable "vpc_private_subnets" {
   default     = []
 }
 
-variable "vpc_public_subnets" {
-  type        = list(string)
-  description = "A list of public subnets inside the VPC.  First subnet in list is used if instance is public"
-  default     = []
-}
-
 variable "iam_role_name" {
   type        = string
   description = "IAM role name"
@@ -54,10 +48,4 @@ variable "user_data" {
   type        = string
   description = "The user data to provide when launching the instance."
   default     = ""
-}
-
-variable "is_public_instance" {
-  type        = bool
-  description = "Instance is accessible from the internet."
-  default     = false
 }

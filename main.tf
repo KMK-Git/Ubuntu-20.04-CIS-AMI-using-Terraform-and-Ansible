@@ -13,32 +13,17 @@ terraform {
 provider "aws" {}
 
 module "vpc" {
-  source                           = "terraform-aws-modules/vpc/aws"
-  version                          = "~> 2.0"
-  name                             = var.vpc_name
-  cidr                             = var.vpc_cidr
-  azs                              = var.vpc_azs
-  private_subnets                  = var.vpc_private_subnets
-  public_subnets                   = var.vpc_public_subnets
-  enable_dns_hostnames             = true
-  enable_dns_support               = true
-  enable_nat_gateway               = false
-  enable_ssm_endpoint              = !var.is_public_instance
-  ssm_endpoint_private_dns_enabled = var.is_public_instance ? null : true
-  ssm_endpoint_security_group_ids = [
-    module.endpoint_sg.this_security_group_id
-  ]
-  enable_ec2messages_endpoint              = !var.is_public_instance
-  ec2messages_endpoint_private_dns_enabled = var.is_public_instance ? null : true
-  ec2messages_endpoint_security_group_ids = [
-    module.endpoint_sg.this_security_group_id
-  ]
-  enable_ssmmessages_endpoint              = !var.is_public_instance
-  ssmmessages_endpoint_private_dns_enabled = var.is_public_instance ? null : true
-  ssmmessages_endpoint_security_group_ids = [
-    module.endpoint_sg.this_security_group_id
-  ]
-  enable_s3_endpoint = true
+  source                 = "terraform-aws-modules/vpc/aws"
+  version                = "~> 2.0"
+  name                   = var.vpc_name
+  cidr                   = var.vpc_cidr
+  azs                    = var.vpc_azs
+  private_subnets        = var.vpc_private_subnets
+  enable_dns_hostnames   = true
+  enable_dns_support     = true
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
+  one_nat_gateway_per_az = false
 }
 
 module "instance_sg" {
@@ -48,33 +33,16 @@ module "instance_sg" {
   name    = var.sg_name
   egress_with_cidr_blocks = [
     {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
       from_port   = 443
       to_port     = 443
       protocol    = "tcp"
-      cidr_blocks = var.vpc_cidr
-    }
-  ]
-}
-
-module "endpoint_sg" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
-  vpc_id  = module.vpc.vpc_id
-  name    = var.sg_name
-  ingress_with_source_security_group_id = [
-    {
-      protocol                 = "tcp"
-      from_port                = 443
-      to_port                  = 443
-      source_security_group_id = module.instance_sg.this_security_group_id
-    }
-  ]
-  egress_with_cidr_blocks = [
-    {
-      cidr_blocks = var.vpc_cidr
-      protocol    = "tcp"
-      from_port   = 443
-      to_port     = 443
+      cidr_blocks = "0.0.0.0/0"
     }
   ]
 }
@@ -125,9 +93,9 @@ module "ec2_instance" {
   name                        = var.instance_name
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
-  associate_public_ip_address = var.is_public_instance
+  associate_public_ip_address = false
   user_data                   = var.user_data
-  subnet_id                   = var.is_public_instance ? module.vpc.public_subnets[0] : module.vpc.private_subnets[0]
+  subnet_id                   = module.vpc.private_subnets[0]
   vpc_security_group_ids = [
     module.instance_sg.this_security_group_id
   ]
@@ -136,7 +104,6 @@ module "ec2_instance" {
   depends_on = [
     module.vpc,
     module.instance_role,
-    module.instance_sg,
-    module.endpoint_sg
+    module.instance_sg
   ]
 }
