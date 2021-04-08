@@ -85,7 +85,7 @@ module "instance_role" {
   create_role             = true
   custom_role_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-    "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   ]
   role_name         = var.iam_role_name
   role_requires_mfa = false

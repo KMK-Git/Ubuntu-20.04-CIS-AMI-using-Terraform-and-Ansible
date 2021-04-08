@@ -129,6 +129,6 @@ jobs:
       - name: Ansible deploy
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          aws ssm send-command --document-name "AWS-RunAnsible" --instance-ids "$(terraform output -raw instance_id)" --output-s3-bucket-name "$ANSIBLE_BUCKET" --output-s3-key-prefix "runcommand" --parameters '{"SourceType": "S3", "SourceInfo": "{\"path\":\"s3://'"$ANSIBLE_BUCKET"'/ubuntuansible.zip\"}", "PlaybookFile": "playbook.yml" ,"Verbose": "-vvvv"}' --timeout-seconds 600
+          aws ssm send-command --document-name "AWS-ApplyAnsiblePlaybooks" --document-version "1" --instance-ids "$(terraform output -raw instance_id)" --parameters '{"SourceType":["S3"],"SourceInfo":["{\"path\": \"s3://'"$ANSIBLE_BUCKET"'/ubuntuansible.zip\"}"],"InstallDependencies":["True"],"PlaybookFile":["playbook.yml"],"ExtraVariables":[""],"Check":["False"],"Verbose":["-vvvv"],"TimeoutSeconds":["600"]}' --timeout-seconds 600 --max-errors "0" --output-s3-bucket-name "$ANSIBLE_BUCKET" --output-s3-key-prefix "runcommandouput/"
         env:
           ANSIBLE_BUCKET: ${{ secrets.ANSIBLE_BUCKET }}
