@@ -4,9 +4,6 @@
   remote_user: root
   become_method: sudo
   tasks:
-    - name: Print all available facts
-      ansible.builtin.debug:
-        var: ansible_facts
-    # - name: Include the cisubuntu role
-    #   include_role:
-    #     name: cisubuntu
+    - name: Include the cisubuntu role
+      include_role:
+        name: cisubuntu
