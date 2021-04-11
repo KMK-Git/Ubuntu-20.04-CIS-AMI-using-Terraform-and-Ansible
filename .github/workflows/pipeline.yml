@@ -2,18 +2,19 @@ name: "Ubuntu 20.04 CIS AMI Baker"
 
 on:
   workflow_dispatch:
-    AMIName:
-      description: "Name of EC2 AMI created"
-      required: true
-      default: "Ubuntu 20.04 CIS AMI"
-    create_instance_and_deploy_ansible:
-      description: "Set 'yes' to create instance and deploy ansible"
-      required: true
-      default: "yes"
-    create_ami_and_destroy_instance:
-      description: "Set 'yes' to create AMI and destroy instance. Make sure instance was created and ansible playbook is deployed if create_instance_and_deploy_ansible != 'yes'"
-      required: true
-      default: "yes"
+    inputs:
+      AMIName:
+        description: "Name of EC2 AMI created"
+        required: true
+        default: "Ubuntu 20.04 CIS AMI"
+      create_instance_and_deploy_ansible:
+        description: "Set 'yes' to create instance and deploy ansible"
+        required: true
+        default: "yes"
+      create_ami_and_destroy_instance:
+        description: "Set 'yes' to create AMI and destroy instance. Make sure instance was created and ansible playbook is deployed if create_instance_and_deploy_ansible != 'yes'"
+        required: true
+        default: "yes"
 
 jobs:
   deploy:
