@@ -48,8 +48,9 @@ This repository is used to create an Amazon Machine Image (AMI) for Ubuntu 20.04
 
 ### Built With
 
-* [Terraform](https://www.terraform.io/)
-* [Ansible](https://www.ansible.com/)
+- [Terraform](https://www.terraform.io/)
+- [Ansible](https://www.ansible.com/)
+- [GitHub Actions](https://github.com/features/actions)
 
 ## Read before using this repository
 
