@@ -20,16 +20,14 @@ variable "vpc_azs" {
   description = "A list of availability zones names or ids in the region"
 }
 
-variable "vpc_private_subnets" {
-  type        = list(string)
-  description = "A list of private subnets inside the VPC. First subnet in list is used for instance"
-  default     = []
+variable "vpc_private_subnet" {
+  type        = string
+  description = "Private subnet inside the VPC. Use for EC2 instance"
 }
 
-variable "vpc_public_subnets" {
-  type        = list(string)
-  description = "A list of public subnets inside the VPC. Used for NAT Gateway"
-  default     = []
+variable "vpc_public_subnet" {
+  type        = string
+  description = "Public subnets inside the VPC. Used for NAT Gateway"
 }
 
 variable "iam_role_name" {
