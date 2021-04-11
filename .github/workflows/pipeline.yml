@@ -120,7 +120,7 @@ jobs:
         if: ${{ github.event.inputs.create_ami_and_destroy_instance == 'yes' }}
         id: create_ami
         run: |
-          image_id="$(aws ec2 create-image --instance-id "$(terraform output -raw instance_id)" --name "${{ github.event.inputs.AMIName }}" || jq -r '.ImageId')"
+          image_id="$(aws ec2 create-image --instance-id "$(terraform output -raw instance_id)" --name "${{ github.event.inputs.AMIName }}" | jq -r '.ImageId')"
           aws ec2 wait image-available --image-ids $image_id
 
       - name: Setup Terraform with wrapper
