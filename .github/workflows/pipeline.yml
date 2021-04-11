@@ -96,7 +96,7 @@ jobs:
         if: ${{ github.event.inputs.create_instance_and_deploy_ansible == 'yes' }}
         id: ansible_deploy
         run: |
-          ssm_command_id="$(aws ssm send-command --document-name "AWS-ApplyAnsiblePlaybooks" --document-version "1" --instance-ids "$(terraform output -raw instance_id)" --parameters '{"SourceType":["S3"],"SourceInfo":["{\"path\": \"https://s3.amazonaws.com/'"$ANSIBLE_BUCKET"'/ubuntuansible.zip\"}"],"InstallDependencies":["True"],"PlaybookFile":["playbook.yml"],"ExtraVariables":[""],"Check":["False"],"Verbose":["-vvvv"],"TimeoutSeconds":["1800"]}' --timeout-seconds 1800 --max-errors "0" --output-s3-bucket-name "$ANSIBLE_BUCKET" --output-s3-key-prefix "runcommandouput/" | jq '.Command.CommandId')"
+          ssm_command_id="$(aws ssm send-command --document-name "AWS-ApplyAnsiblePlaybooks" --document-version "1" --instance-ids "$(terraform output -raw instance_id)" --parameters '{"SourceType":["S3"],"SourceInfo":["{\"path\": \"https://s3.amazonaws.com/'"$ANSIBLE_BUCKET"'/ubuntuansible.zip\"}"],"InstallDependencies":["True"],"PlaybookFile":["playbook.yml"],"ExtraVariables":[""],"Check":["False"],"Verbose":["-vvvv"],"TimeoutSeconds":["1800"]}' --timeout-seconds 1800 --max-errors "0" --output-s3-bucket-name "$ANSIBLE_BUCKET" --output-s3-key-prefix "runcommandouput/" | jq -r '.Command.CommandId')"
           echo ::set-output name=ssm_command_id::"$ssm_command_id"
         env:
           ANSIBLE_BUCKET: ${{ secrets.ANSIBLE_BUCKET }}
