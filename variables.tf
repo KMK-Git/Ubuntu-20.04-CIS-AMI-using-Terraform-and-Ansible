@@ -32,7 +32,7 @@ variable "vpc_public_subnet" {
 
 variable "iam_role_name" {
   type        = string
-  description = "IAM role name"
+  description = "Name of IAM role created for EC2 instance"
   default     = ""
 }
 

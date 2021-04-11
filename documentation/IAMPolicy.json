@@ -1,0 +1,99 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "EC2",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "IAMRolePolicy",
+            "Effect": "Allow",
+            "Action": [
+                "iam:DetachRolePolicy",
+                "iam:AttachRolePolicy"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ForAnyValue:ArnEquals": {
+                    "iam:PolicyARN": [
+                        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+                        "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "IAMRoleManagement",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateInstanceProfile",
+                "iam:GetPolicyVersion",
+                "iam:ListRoleTags",
+                "iam:UntagRole",
+                "iam:TagRole",
+                "iam:ListPoliciesGrantingServiceAccess",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:ListInstanceProfileTags",
+                "iam:AddRoleToInstanceProfile",
+                "iam:ListInstanceProfilesForRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListPolicyTags",
+                "iam:ListRolePolicies",
+                "iam:ListPolicies",
+                "iam:DeleteInstanceProfile",
+                "iam:GetRole",
+                "iam:GetInstanceProfile",
+                "iam:GetPolicy",
+                "iam:ListEntitiesForPolicy",
+                "iam:ListRoles",
+                "iam:ListInstanceProfiles",
+                "iam:TagPolicy",
+                "iam:ListPolicyVersions",
+                "iam:GetRolePolicy",
+                "iam:TagInstanceProfile",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:UpdateRole"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "IAMPassRole",
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::765481644205:role/UbuntuCISIAMRole"
+        },
+        {
+            "Sid": "SystemManager",
+            "Effect": "Allow",
+            "Action": [
+                "ssm:DescribeInstanceInformation",
+                "ssm:SendCommand",
+                "ssm:GetCommandInvocation"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "S3Bucket",
+            "Effect": "Allow",
+            "Action": "s3:ListBucket*",
+            "Resource": [
+                "arn:aws:s3:::iudlgcqmw5-tfstate",
+                "arn:aws:s3:::h4nzy9bjtt-ansible"
+            ]
+        },
+        {
+            "Sid": "S3BucketObjects",
+            "Effect": "Allow",
+            "Action": "s3:*Object",
+            "Resource": [
+                "arn:aws:s3:::iudlgcqmw5-tfstate/terraform.tfstate",
+                "arn:aws:s3:::h4nzy9bjtt-ansible/*"
+            ]
+        }
+    ]
+}
