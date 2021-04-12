@@ -5,7 +5,7 @@
   <h3 align="center">Ubuntu-20.04-CIS-AMI-using-Terraform-and-Ansible</h3>
 
   <p align="center">
-    Create Ubuntu 20.04 AMI hardened using CIS benchmarks using Terraform and Ansible
+    Create Ubuntu 20.04 AMI hardened according to CIS benchmarks using Terraform and Ansible
     <br />
     <a href="https://github.com/KMK-Git/Ubuntu-20.04-CIS-AMI-using-Terraform-and-Ansible/issues">Report Bug</a>
     ·
@@ -44,7 +44,7 @@
 
 ![Architecture](../assets/assets/Architecture.png?raw=true)
 
-This repository is used to create an Amazon Machine Image (AMI) for Ubuntu 20.04 which is hardened using CIS benchmarks. It uses the [Ansible role](https://github.com/alivx/CIS-Ubuntu-20.04-Ansible) created by [Alivx](https://github.com/alivx) for creating the image.
+This repository is used to create an Amazon Machine Image (AMI) for Ubuntu 20.04 which is hardened according to CIS benchmarks. It uses the [Ansible role](https://github.com/alivx/CIS-Ubuntu-20.04-Ansible) created by [Alivx](https://github.com/alivx) for creating the image.
 
 ### Built With
 
@@ -54,8 +54,8 @@ This repository is used to create an Amazon Machine Image (AMI) for Ubuntu 20.04
 
 ## Read before using this repository
 
-- The Ansible role used does not cover all parts of the CIS benchmarks. Please refer to [CIS-Ubuntu-20.04-Ansible repository](https://github.com/alivx/CIS-Ubuntu-20.04-Ansible#table-of-roles) for more information on which guidelines are covered. In order to make manual changes to the image, you can run the "Ubuntu 20.04 CIS AMI Baker" workflow in two parts. For the first run set create_ami_and_destroy_instance=no and for the second run set create_instance_and_deploy_ansible=no
 - This repository will create billable AWS resources.
+- The Ansible role used does not cover all parts of the CIS benchmarks. Please refer to [CIS-Ubuntu-20.04-Ansible repository](https://github.com/alivx/CIS-Ubuntu-20.04-Ansible#table-of-roles) for more information on which guidelines are covered. In order to make manual changes to the image, you can run the "Ubuntu 20.04 CIS AMI Baker" workflow in two parts. For the first run set create_instance_and_deploy_ansible=yes and create_ami_and_destroy_instance=no. Connect to the instance using Session Manager and make any manual changes. For the second run set create_instance_and_deploy_ansible=no and create_ami_and_destroy_instance=yes.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -67,11 +67,11 @@ This repository is used to create an Amazon Machine Image (AMI) for Ubuntu 20.04
 
 ### Using this Repository
 
-1. Create an IAM User with programmatic access AWS Access Key ID and Secret Access Key. Attach [this IAM policy](documentation/IAMPolicy.json) to the user.
+1. Create an IAM User with programmatic access AWS Access Key ID and Secret Access Key. Attach [this IAM policy](documentation/IAMPolicy.json) to the user. Replace placeholder values like STATE_BUCKET_NAME with actual values.
 2. Create your own copy of the repository on GitHub by cloning or forking.
 3. Set your repository secrets according to the table given at [documentation/SECRETS.md](documentation/SECRETS.md).
 4. Replace [ansible/roles/cisubuntu/default/main.yml](ansible/roles/cisubuntu/default/main.yml) with contents of [ansible/roles/cisubuntu/default/main-example.yml](ansible/roles/cisubuntu/default/main-example.yml). Run ansible-vault encrypt to encrypt the modified main.yml file. Set the vault password you used as the value of VAULT_PASS GitHub secret.
-5. Push to/merge with main branch of your repository.
+5. Push to your repository.
 6. Run the 'Ubuntu 20.04 CIS AMI Baker' workflow.
 
 <!-- ROADMAP -->
