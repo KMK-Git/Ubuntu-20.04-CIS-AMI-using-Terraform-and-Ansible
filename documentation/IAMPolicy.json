@@ -65,7 +65,7 @@
             "Sid": "IAMPassRole",
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::765481644205:role/UbuntuCISIAMRole"
+            "Resource": "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
         },
         {
             "Sid": "SystemManager",
@@ -82,8 +82,8 @@
             "Effect": "Allow",
             "Action": "s3:ListBucket*",
             "Resource": [
-                "arn:aws:s3:::iudlgcqmw5-tfstate",
-                "arn:aws:s3:::h4nzy9bjtt-ansible"
+                "arn:aws:s3:::STATE_BUCKET_NAME",
+                "arn:aws:s3:::ANSIBLE_BUCKET"
             ]
         },
         {
@@ -91,8 +91,8 @@
             "Effect": "Allow",
             "Action": "s3:*Object",
             "Resource": [
-                "arn:aws:s3:::iudlgcqmw5-tfstate/terraform.tfstate",
-                "arn:aws:s3:::h4nzy9bjtt-ansible/*"
+                "arn:aws:s3:::STATE_BUCKET_NAME/STATE_BUCKET_KEY",
+                "arn:aws:s3:::ANSIBLE_BUCKET/*"
             ]
         }
     ]
